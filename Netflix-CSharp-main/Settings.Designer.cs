@@ -31,7 +31,6 @@
             this.lblConfiguracoes = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnExcluirAmigo = new System.Windows.Forms.Button();
             this.txtAmigo = new System.Windows.Forms.TextBox();
             this.btnAdicionarAmigo = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -39,6 +38,7 @@
             this.btnAlterarDados = new System.Windows.Forms.Button();
             this.lblJaTemConta = new System.Windows.Forms.Label();
             this.lstAmigos = new System.Windows.Forms.ListBox();
+            this.btnExcluirAmigo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,17 +80,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Adicionar Amigo";
             // 
-            // btnExcluirAmigo
-            // 
-            this.btnExcluirAmigo.Enabled = false;
-            this.btnExcluirAmigo.Location = new System.Drawing.Point(34, 102);
-            this.btnExcluirAmigo.Name = "btnExcluirAmigo";
-            this.btnExcluirAmigo.Size = new System.Drawing.Size(118, 40);
-            this.btnExcluirAmigo.TabIndex = 22;
-            this.btnExcluirAmigo.Text = "Excluir amigo";
-            this.btnExcluirAmigo.UseVisualStyleBackColor = true;
-            this.btnExcluirAmigo.Click += new System.EventHandler(this.btnExcluirAmigo_Click);
-            // 
             // txtAmigo
             // 
             this.txtAmigo.ForeColor = System.Drawing.Color.DimGray;
@@ -99,13 +88,11 @@
             this.txtAmigo.Size = new System.Drawing.Size(347, 20);
             this.txtAmigo.TabIndex = 21;
             this.txtAmigo.Text = "Email do seu amigo";
-            this.txtAmigo.TextChanged += new System.EventHandler(this.txtAmigo_TextChanged);
             this.txtAmigo.Enter += new System.EventHandler(this.txtAmigo_Enter);
             this.txtAmigo.Leave += new System.EventHandler(this.txtAmigo_Leave);
             // 
             // btnAdicionarAmigo
             // 
-            this.btnAdicionarAmigo.Enabled = false;
             this.btnAdicionarAmigo.Location = new System.Drawing.Point(205, 102);
             this.btnAdicionarAmigo.Name = "btnAdicionarAmigo";
             this.btnAdicionarAmigo.Size = new System.Drawing.Size(176, 40);
@@ -133,7 +120,6 @@
             this.btnExcluirConta.TabIndex = 6;
             this.btnExcluirConta.Text = "Excluir conta";
             this.btnExcluirConta.UseVisualStyleBackColor = true;
-            this.btnExcluirConta.Click += new System.EventHandler(this.btnExcluirConta_Click);
             // 
             // btnAlterarDados
             // 
@@ -162,6 +148,16 @@
             this.lstAmigos.Name = "lstAmigos";
             this.lstAmigos.Size = new System.Drawing.Size(336, 484);
             this.lstAmigos.TabIndex = 8;
+            // 
+            // btnExcluirAmigo
+            // 
+            this.btnExcluirAmigo.Location = new System.Drawing.Point(34, 102);
+            this.btnExcluirAmigo.Name = "btnExcluirAmigo";
+            this.btnExcluirAmigo.Size = new System.Drawing.Size(118, 40);
+            this.btnExcluirAmigo.TabIndex = 22;
+            this.btnExcluirAmigo.Text = "Excluir amigo";
+            this.btnExcluirAmigo.UseVisualStyleBackColor = true;
+            this.btnExcluirAmigo.Click += new System.EventHandler(this.btnExcluirAmigo_Click);
             // 
             // Settings
             // 
