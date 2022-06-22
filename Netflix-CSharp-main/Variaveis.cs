@@ -12,8 +12,8 @@ namespace Netflix
         public static String idfilme;
         public static String NomeUsuario;
         public static String EmailUsuario;
-        public static String strCon = "Data Source=DESKTOP-SA9T3MO;Initial Catalog=contas;Integrated Security=true;";
-        //public static String strCon = "Data Source=LI08-15;Initial Catalog=contas;User ID=sa;password=123456";
+        //public static String strCon = "Data Source=DESKTOP-SA9T3MO;Initial Catalog=contas;Integrated Security=true;";
+        public static String strCon = "Data Source=LI03-11;Initial Catalog=contas;User ID=sa;password=123456";
     }
 
 }
