@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Microsoft.VisualBasic;
 
 namespace Netflix
 {
@@ -66,6 +67,7 @@ namespace Netflix
                             sqlCon.Open();
                             comando2.ExecuteNonQuery();
                             MessageBox.Show("Amigo adicionado");
+                            txtAmigo.Text = "";
                         }
                         catch (SqlException ex)
                         {
@@ -110,6 +112,77 @@ namespace Netflix
             atualizarListaAmigos();
         }
 
+        private void btnExcluirAmigo_Click(object sender, EventArgs e)
+        {
+            if (txtAmigo.Text != Variaveis.EmailUsuario)
+            {
+                SqlConnection sqlCon = null;
+                String strCon = Variaveis.strCon;
+                String strSql = "";
+                strSql = "select * from Amigos where (amigos_email_usuario1 = @usuario1 and amigos_email_usuario2 = @usuario2) or (amigos_email_usuario1 = @usuario2 and amigos_email_usuario2 = @usuario1)";
+                sqlCon = new SqlConnection(strCon);
+                SqlCommand comando = new SqlCommand(strSql, sqlCon);
+                comando.Parameters.Add("@usuario1", SqlDbType.VarChar).Value = Variaveis.EmailUsuario;
+                comando.Parameters.Add("@usuario2", SqlDbType.VarChar).Value = txtAmigo.Text;
+                sqlCon.Open();
+                SqlDataReader dr = comando.ExecuteReader();
+                if (dr.HasRows == true)
+                {
+                    dr.Read();
+                    String deseja_remover;
+                    if (Convert.ToString(dr["amigos_email_usuario1"])==Variaveis.EmailUsuario)
+                    {
+                        deseja_remover = Convert.ToString(dr["amigos_nome_usuario2"]);
+                    }
+                    else
+                    {
+                        deseja_remover = Convert.ToString(dr["amigos_nome_usuario1"]);
+                    }
+                    if (MessageBox.Show("Deseja remover " + deseja_remover + " da sua lisa de amigos?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        sqlCon.Close();
+                        strSql = "delete from Amigos where (amigos_email_usuario1 = @usuario1 and amigos_email_usuario2 = @usuario2) or (amigos_email_usuario1 = @usuario2 and amigos_email_usuario2 = @usuario1)";
+                        comando = new SqlCommand(strSql, sqlCon);
+                        comando.Parameters.Add("@usuario1", SqlDbType.VarChar).Value = Variaveis.EmailUsuario;
+                        comando.Parameters.Add("@usuario2", SqlDbType.VarChar).Value = txtAmigo.Text;
+                        try
+                        {
+                            sqlCon.Open();
+                            comando.ExecuteNonQuery();
+                            MessageBox.Show("Amigo excluído com sucesso");
+                        }
+                        catch (SqlException ex)
+                        {
+                            StringBuilder errorMessages = new StringBuilder();
+                            for (int i = 0; i < ex.Errors.Count; i++)
+                            {
+                                errorMessages.Append("Index #" + i + "\n" +
+                                    "Message: " + ex.Errors[i].Message + "\n" +
+                                    "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                                    "Source: " + ex.Errors[i].Source + "\n" +
+                                    "Procedure: " + ex.Errors[i].Procedure + "\n");
+                            }
+                            Console.WriteLine(errorMessages.ToString());
+                            Console.WriteLine(ex.Number);
+                            MessageBox.Show("Ocorreu um erro desconhecido ao excluir esse amigo, por favor tente novamente", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        sqlCon.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Usuário não encontrado", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                sqlCon.Close();
+            }
+            else
+            {
+                MessageBox.Show("Essa é sua própria conta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            lstAmigos.Items.Clear();
+            atualizarListaAmigos();
+        }
+
         private void atualizarListaAmigos()
         {
             SqlConnection sqlCon = null;
@@ -135,9 +208,104 @@ namespace Netflix
             }
         }
 
-        private void btnExcluirAmigo_Click(object sender, EventArgs e)
+        private void txtAmigo_TextChanged(object sender, EventArgs e)
         {
+            if (txtAmigo.Text != "")
+            {
+                btnAdicionarAmigo.Enabled = true;
+                btnExcluirAmigo.Enabled = true;
+            }
+            else
+            {
+                btnAdicionarAmigo.Enabled = false;
+                btnExcluirAmigo.Enabled = false;
+            }
+        }
 
+        private void btnExcluirConta_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja excluir sua conta? Essa ação é irreversível", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                string senha = Interaction.InputBox("Digite sua senha para confirmar", "Verificação");
+                if (senha != "")
+                {
+                    SqlConnection sqlCon = null;
+                    String strCon = Variaveis.strCon;
+                    String strSql = "";
+                    strSql = "select * from Cliente where cliente_email = @cliente_email and cliente_senha = @cliente_senha";
+                    sqlCon = new SqlConnection(strCon);
+                    SqlCommand comando = new SqlCommand(strSql, sqlCon);
+                    comando.Parameters.Add("@cliente_email", SqlDbType.VarChar).Value = Variaveis.EmailUsuario;
+                    comando.Parameters.Add("@cliente_senha", SqlDbType.VarChar).Value = senha;
+                    sqlCon.Open();
+                    SqlDataReader dr = comando.ExecuteReader();
+                    if (dr.HasRows == true)
+                    {
+                        sqlCon.Close();
+                        strSql = "delete from Amigos where (amigos_email_usuario1 = @email) or (amigos_email_usuario2 = @email);delete from Cliente where cliente_email = @email;";
+                        comando = new SqlCommand(strSql, sqlCon);
+                        comando.Parameters.Add("@email", SqlDbType.VarChar).Value = Variaveis.EmailUsuario;
+                        try
+                        {
+                            sqlCon.Open();
+                            comando.ExecuteNonQuery();
+                            MessageBox.Show("Conta excluída");
+                            Inicio i = new Inicio();
+                            i.StartPosition = FormStartPosition.Manual;
+                            i.Location = this.Location;
+                            i.Show();
+                            this.Hide();
+                        }
+                        catch (SqlException ex)
+                        {
+                            StringBuilder errorMessages = new StringBuilder();
+                            for (int i = 0; i < ex.Errors.Count; i++)
+                            {
+                                errorMessages.Append("Index #" + i + "\n" +
+                                    "Message: " + ex.Errors[i].Message + "\n" +
+                                    "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                                    "Source: " + ex.Errors[i].Source + "\n" +
+                                    "Procedure: " + ex.Errors[i].Procedure + "\n");
+                            }
+                            Console.WriteLine(errorMessages.ToString());
+                            Console.WriteLine(ex.Number);
+                            MessageBox.Show("Ocorreu um erro desconhecido ao excluir a conta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        sqlCon.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Senha incorreta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    sqlCon.Close();
+                }
+            }
+        }
+
+        private void btnAlterarDados_Click(object sender, EventArgs e)
+        {
+            AlterarDados a = new AlterarDados();
+            a.StartPosition = FormStartPosition.Manual;
+            a.Location = this.Location;
+            a.Show();
+            this.Hide();
+        }
+
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja sair?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void btn_FecharConfiguracoes_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.StartPosition = FormStartPosition.Manual;
+            f2.Location = this.Location;
+            f2.Show();
+            this.Hide();
         }
     }
 }

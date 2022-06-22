@@ -35,6 +35,7 @@ namespace Netflix
             this.btnAssistir = new System.Windows.Forms.Button();
             this.lblEscolha = new System.Windows.Forms.Label();
             this.btnConfiguracoes = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstFilmes
@@ -111,11 +112,23 @@ namespace Netflix
             this.btnConfiguracoes.UseVisualStyleBackColor = true;
             this.btnConfiguracoes.Click += new System.EventHandler(this.btnConfiguracoes_Click);
             // 
+            // btnSair
+            // 
+            this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSair.Location = new System.Drawing.Point(907, 12);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(50, 32);
+            this.btnSair.TabIndex = 13;
+            this.btnSair.Text = "Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 661);
+            this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnConfiguracoes);
             this.Controls.Add(this.lblEscolha);
             this.Controls.Add(this.btnAssistir);
@@ -138,5 +151,6 @@ namespace Netflix
         private System.Windows.Forms.Button btnAssistir;
         private System.Windows.Forms.Label lblEscolha;
         private System.Windows.Forms.Button btnConfiguracoes;
+        private System.Windows.Forms.Button btnSair;
     }
 }

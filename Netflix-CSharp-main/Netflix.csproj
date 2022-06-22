@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlterarDados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarDados.Designer.cs">
+      <DependentUpon>AlterarDados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +112,9 @@
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Variaveis.cs" />
+    <EmbeddedResource Include="AlterarDados.resx">
+      <DependentUpon>AlterarDados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -31,6 +31,7 @@
             this.lblConfiguracoes = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnExcluirAmigo = new System.Windows.Forms.Button();
             this.txtAmigo = new System.Windows.Forms.TextBox();
             this.btnAdicionarAmigo = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,7 +39,8 @@
             this.btnAlterarDados = new System.Windows.Forms.Button();
             this.lblJaTemConta = new System.Windows.Forms.Label();
             this.lstAmigos = new System.Windows.Forms.ListBox();
-            this.btnExcluirAmigo = new System.Windows.Forms.Button();
+            this.btnSair = new System.Windows.Forms.Button();
+            this.btn_FecharConfiguracoes = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,6 +82,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Adicionar Amigo";
             // 
+            // btnExcluirAmigo
+            // 
+            this.btnExcluirAmigo.Enabled = false;
+            this.btnExcluirAmigo.Location = new System.Drawing.Point(34, 102);
+            this.btnExcluirAmigo.Name = "btnExcluirAmigo";
+            this.btnExcluirAmigo.Size = new System.Drawing.Size(118, 40);
+            this.btnExcluirAmigo.TabIndex = 22;
+            this.btnExcluirAmigo.Text = "Excluir amigo";
+            this.btnExcluirAmigo.UseVisualStyleBackColor = true;
+            this.btnExcluirAmigo.Click += new System.EventHandler(this.btnExcluirAmigo_Click);
+            // 
             // txtAmigo
             // 
             this.txtAmigo.ForeColor = System.Drawing.Color.DimGray;
@@ -88,11 +101,13 @@
             this.txtAmigo.Size = new System.Drawing.Size(347, 20);
             this.txtAmigo.TabIndex = 21;
             this.txtAmigo.Text = "Email do seu amigo";
+            this.txtAmigo.TextChanged += new System.EventHandler(this.txtAmigo_TextChanged);
             this.txtAmigo.Enter += new System.EventHandler(this.txtAmigo_Enter);
             this.txtAmigo.Leave += new System.EventHandler(this.txtAmigo_Leave);
             // 
             // btnAdicionarAmigo
             // 
+            this.btnAdicionarAmigo.Enabled = false;
             this.btnAdicionarAmigo.Location = new System.Drawing.Point(205, 102);
             this.btnAdicionarAmigo.Name = "btnAdicionarAmigo";
             this.btnAdicionarAmigo.Size = new System.Drawing.Size(176, 40);
@@ -120,6 +135,7 @@
             this.btnExcluirConta.TabIndex = 6;
             this.btnExcluirConta.Text = "Excluir conta";
             this.btnExcluirConta.UseVisualStyleBackColor = true;
+            this.btnExcluirConta.Click += new System.EventHandler(this.btnExcluirConta_Click);
             // 
             // btnAlterarDados
             // 
@@ -129,6 +145,7 @@
             this.btnAlterarDados.TabIndex = 6;
             this.btnAlterarDados.Text = "Alterar dados cadastrais";
             this.btnAlterarDados.UseVisualStyleBackColor = true;
+            this.btnAlterarDados.Click += new System.EventHandler(this.btnAlterarDados_Click);
             // 
             // lblJaTemConta
             // 
@@ -149,21 +166,35 @@
             this.lstAmigos.Size = new System.Drawing.Size(336, 484);
             this.lstAmigos.TabIndex = 8;
             // 
-            // btnExcluirAmigo
+            // btnSair
             // 
-            this.btnExcluirAmigo.Location = new System.Drawing.Point(34, 102);
-            this.btnExcluirAmigo.Name = "btnExcluirAmigo";
-            this.btnExcluirAmigo.Size = new System.Drawing.Size(118, 40);
-            this.btnExcluirAmigo.TabIndex = 22;
-            this.btnExcluirAmigo.Text = "Excluir amigo";
-            this.btnExcluirAmigo.UseVisualStyleBackColor = true;
-            this.btnExcluirAmigo.Click += new System.EventHandler(this.btnExcluirAmigo_Click);
+            this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSair.Location = new System.Drawing.Point(907, 12);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(50, 32);
+            this.btnSair.TabIndex = 13;
+            this.btnSair.Text = "Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // btn_FecharConfiguracoes
+            // 
+            this.btn_FecharConfiguracoes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_FecharConfiguracoes.Location = new System.Drawing.Point(423, 643);
+            this.btn_FecharConfiguracoes.Name = "btn_FecharConfiguracoes";
+            this.btn_FecharConfiguracoes.Size = new System.Drawing.Size(132, 43);
+            this.btn_FecharConfiguracoes.TabIndex = 14;
+            this.btn_FecharConfiguracoes.Text = "Fechar Configurações";
+            this.btn_FecharConfiguracoes.UseVisualStyleBackColor = true;
+            this.btn_FecharConfiguracoes.Click += new System.EventHandler(this.btn_FecharConfiguracoes_Click);
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 661);
+            this.ClientSize = new System.Drawing.Size(969, 695);
+            this.Controls.Add(this.btn_FecharConfiguracoes);
+            this.Controls.Add(this.btnSair);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblConfiguracoes);
             this.Name = "Settings";
@@ -191,5 +222,7 @@
         private System.Windows.Forms.TextBox txtAmigo;
         private System.Windows.Forms.Label lblJaTemConta;
         private System.Windows.Forms.Button btnExcluirAmigo;
+        private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.Button btn_FecharConfiguracoes;
     }
 }

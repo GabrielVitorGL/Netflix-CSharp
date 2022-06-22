@@ -101,14 +101,13 @@ namespace Netflix
             int cvv;
             string validadeformat = mtxtValidade.Text.Insert(2, "/");
             validadeformat = validadeformat.Insert(5, "/");
-            Console.WriteLine(validadeformat);
 
             if (txtCVV.Text == "" ||
             txtEmail.Text == "" ||
-            txtNCartao.Text == ""||
-            txtNome.Text == ""||
-            txtSenha.Text == ""||
-            txtCPF.Text == ""||
+            txtNCartao.Text == "" ||
+            txtNome.Text == "" ||
+            txtSenha.Text == "" ||
+            txtCPF.Text == "" ||
             mtxtValidade.Text == "")
             {
                 MessageBox.Show("Certifique-se que preencheu todos os campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -116,6 +115,14 @@ namespace Netflix
             else if (chkTermos.Checked == false)
             {
                 MessageBox.Show("Você precisa aceitar os termos para criar sua conta!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (txtSenha.Text.Length < 6)
+            {
+                MessageBox.Show("Sua senha deve conter ao menos 6 caracteres!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (EmailValido(txtEmail.Text) == false)
+            {
+                MessageBox.Show("O Email que você digitou não é válido!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (long.TryParse(txtNCartao.Text, out long temp) == false)
             {
@@ -128,13 +135,21 @@ namespace Netflix
             else if (DateTime.TryParse(validadeformat, out validade) == false) {
                 MessageBox.Show("O valor que você digitou na data não é válido!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if (txtCPF.Text.Length > 15)
+            else if (txtCPF.Text.Length != 11)
             {
                 MessageBox.Show("O valor que você digitou no CPF não é válido!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if (txtNCartao.Text.Length > 16)
+            else if (txtNCartao.Text.Length > 16 || txtNCartao.Text.Length < 13)
             {
                 MessageBox.Show("O valor que você digitou no Número do Cartão não é válido!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (txtCVV.Text.Length != 3)
+            {
+                MessageBox.Show("O valor que você digitou no CVV não é válido!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (txtNome.Text.Length <= 2)
+            {
+                MessageBox.Show("Seu nome deve ter mais de 2 caracteres!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -262,6 +277,24 @@ namespace Netflix
             if ((((TextBox)sender).Text.Length >= 3) && (e.KeyChar != '\b'))
             {
                 e.Handled = true;
+            }
+        }
+        bool EmailValido(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
